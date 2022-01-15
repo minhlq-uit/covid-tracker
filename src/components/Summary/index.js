@@ -4,22 +4,21 @@ import LineChart from '../Charts/LineChart'
 import HighMaps from '../Charts/HighMaps'
 import { getMapDataByCountryId } from "../apis";
 
-export default function Summary({overview}) {
+export default function Summary({overview, data}) {
     const [mapData, setMapData] = useState({});
 
     useEffect(() => {
-        getMapDataByCountryId('vn')
-          .then((res) => {
-            setMapData(res);
-          })
+        import(`@highcharts/map-collection/countries/vn/vn-all.geo.json`)
+          .then(res => setMapData(res))
     }, []);
+    
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{ marginTop: 10 }}>
             <Grid item sm={8} xs={12}>
                 <LineChart data={overview}/>
             </Grid>
             <Grid item sm={4} xs={12}>
-                <HighMaps mapData={mapData}/>
+                <HighMaps mapData={mapData} data={data}/>
             </Grid>
         </Grid>
     )

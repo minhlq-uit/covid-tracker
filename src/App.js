@@ -35,21 +35,17 @@ function App() {
   // console.log(data)
   
   useEffect(() => {
-    // provinces.forEach((province, index) => {
-    //   if(province === provinceSelected) {
-    //     setReport(() => data.locations[index])
-    //   }
-    // })
-    setReport(() => data.locations.find(location => {
-      location.name === provinceSelected
-    }))
+    if(data.locations) {
+      setReport(() => data.locations.find(location => location.name === provinceSelected))
+    }
   }, [provinceSelected])
-  console.log('report', report)
+
   return (
     <Container>
+      <h1>Thống kê Covid 19</h1>
       <ProvinceSelector value={provinceSelected} provinces={provinces} handleOnChange={handleOnChange}/>
       <Highlight report={report}/>
-      <Summary overview={data.overview}/>
+      <Summary overview={data.overview} data={data}/>
     </Container>
   );
 }

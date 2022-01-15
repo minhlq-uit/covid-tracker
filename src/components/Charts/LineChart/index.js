@@ -21,7 +21,7 @@ const generateOptions = (data, reportType) => {
         height: 500,
       },
       title: {
-        text: 'Thống kê dữ liệu covid 19 theo ngày',
+        text: 'Dữ liệu covid 19 7 ngày gần nhất tại Việt Nam',
       },
       xAxis: {
         categories: categories,
