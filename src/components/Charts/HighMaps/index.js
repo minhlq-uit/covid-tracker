@@ -45,6 +45,7 @@ const initOptions = {
   const HighMaps = ({ mapData, data }) => {
     const [options, setOptions] = useState({});
     const [mapLoaded, setMapLoaded] = useState(false);
+    const [customData, setCustomData] = useState([])
     const chartRef = useRef(null);
   
     function removeVietnameseTones(str) {
@@ -78,37 +79,43 @@ const initOptions = {
       str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
       return str;
   }
+  useEffect(() => {
+    setCustomData(() => {
+      if(data.locations) {
+        const custom = data.locations.map(location => {
+          if(location.name === "TP. Hồ Chí Minh") {
+            return (
+              {
+                ...location,
+                name: 'H  Ch  Minh city'
+              }
+            )
+          }
+          if(location.name === 'Hà Nội') {
+            return (
+              {
+                ...location,
+                name: 'Ha Noi'
+              }
+            )
+          }
+          return (
+            {
+              ...location,
+              name: removeVietnameseTones(location.name)
+            }
+          )
+        })
+        return custom
+      }
+    })
+  }, [data])
   function getValue(feature, index) {
     if(data.locations) {
       // console.log('tim', feature, index)
       const name = removeVietnameseTones(feature)
       // console.log('tim', name, index)
 
-      const customData = data.locations.map(location => {
-        if(location.name === "TP. Hồ Chí Minh") {
-          return (
-            {
-              ...location,
-              name: 'H  Ch  Minh city'
-            }
-          )
-        }
-        if(location.name === 'Hà Nội') {
-          return (
-            {
-              ...location,
-              name: 'Ha Noi'
-            }
-          )
-        }
-        return (
-          {
-            ...location,
-            name: removeVietnameseTones(location.name)
-          }
-        )
-      })
-      // console.log('custom', customData)
 
       let value 
       for(let i=0; i<customData.length; i++) {

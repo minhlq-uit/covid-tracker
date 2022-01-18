@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import LineChart from '../Charts/LineChart'
 import HighMaps from '../Charts/HighMaps'
-import { getMapDataByCountryId } from "../apis";
 
 export default function Summary({overview, data}) {
     const [mapData, setMapData] = useState({});
